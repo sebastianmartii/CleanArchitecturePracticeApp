@@ -1,8 +1,9 @@
 package com.example.cleanarchitecturepracticeapp.feature_genres.di
 
 import android.app.Application
+import android.content.Context
 import androidx.room.Room
-import com.example.cleanarchitecturepracticeapp.constants.BASE_URL
+import com.example.cleanarchitecturepracticeapp.constants.GENRES_BASE_URL
 import com.example.cleanarchitecturepracticeapp.feature_genres.data.local.GenresDatabase
 import com.example.cleanarchitecturepracticeapp.feature_genres.data.remote.GenresApi
 import com.example.cleanarchitecturepracticeapp.feature_genres.data.repository.GenresRepositoryImpl
@@ -14,6 +15,7 @@ import com.example.cleanarchitecturepracticeapp.feature_genres.domain.use_case.G
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -59,7 +61,7 @@ object GenresModule {
     @Singleton
     fun provideGenresApi(): GenresApi {
         return Retrofit.Builder()
-            .baseUrl(BASE_URL)
+            .baseUrl(GENRES_BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
             .create(GenresApi::class.java)
@@ -71,16 +73,16 @@ object GenresModule {
         api: GenresApi,
         db: GenresDatabase
     ): GenresRepository {
-        return GenresRepositoryImpl(genresApi = api, dao = db.dao)
+        return GenresRepositoryImpl(genresApi = api, dao = db.genresDao)
     }
 
     @Provides
     @Singleton
     fun provideGenresDatabase(
-        app: Application
+        @ApplicationContext appContext: Context
     ): GenresDatabase {
         return Room.databaseBuilder(
-            app, GenresDatabase::class.java, "genres_db"
+            appContext, GenresDatabase::class.java, "genres_db"
         ).build()
     }
 }

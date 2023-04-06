@@ -6,5 +6,5 @@ import com.example.cleanarchitecturepracticeapp.feature_genres.data.local.entity
 
 @Database(entities = [GenresEntity::class], version = 1, exportSchema = false)
 abstract class GenresDatabase : RoomDatabase() {
-    abstract val dao: GenresDao
+    abstract val genresDao: GenresDao
 }

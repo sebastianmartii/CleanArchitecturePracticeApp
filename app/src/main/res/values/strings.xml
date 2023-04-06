@@ -3,4 +3,6 @@
     <string name="generateGenreButtonText">Generate Random Music Genre</string>
     <string name="deleteButtonText">DELETE</string>
     <string name="previousGenresListTitle">Previously generated genres:</string>
+    <string name="previousActivitiesListTitle">Previously generated activities:</string>
+    <string name="generateActivitiesButtonText">Generate Random Activity</string>
 </resources>
